@@ -1,0 +1,3 @@
+[submodule "FW_RV32CoreIdent/Controller/CH32V003"]
+	path = FW_RV32CoreIdent/Controller/CH32V003
+	url = https://github.com/islandcontroller/mculib-controller-ch32v003
