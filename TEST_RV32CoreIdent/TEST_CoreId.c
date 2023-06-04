@@ -10,6 +10,7 @@
 
 /*- Test environment ---------------------------------------------------------*/
 #include <CuTest.h>
+#include "lambda.h"
 
 
 /*- Stubs --------------------------------------------------------------------*/
@@ -235,7 +236,7 @@ TEST_GROUP(TestCoreId_GetExtensionName)
 
 
 /*- GetPresentExtensions -----------------------------------------------------*/
-void vDummy(char cExt __attribute__((unused))) {}
+static void vDummy(char cExt __attribute__((unused))) {}
 
 /*!****************************************************************************
  * @brief
@@ -255,10 +256,37 @@ TEST_CASE(TEST_CoreId_GetPresentExtensions_AccessCount)
   CuAssertIntEquals(ulExpected, ulActual);
 }
 
+/*!****************************************************************************
+ * @brief
+ * First found extension is 'C'
+ *
+ * @date  04.06.2023
+ ******************************************************************************/
+TEST_CASE(TEST_CoreId_GetPresentExtensions_AccessValue)
+{
+  vStub_CSRs_Reset();
+  vStub_CSRs_SetMisa(0x1u << 2);
+
+  const char cExpected = 'C';
+
+  bool bCalled = false;
+  char cActual = '\0';
+  BEGIN_LAMBDA_SECTION();
+  vCoreIdGetPresentExtensions(LAMBDA((char cExt), void, {
+    bCalled = true;
+    cActual = cExt;
+  }));
+  END_LAMBDA_SECTION();
+
+  CuAssert(bCalled, "Callback not called");
+  CuAssertIntEquals(cExpected, cActual);
+}
+
 /*! Test group definition for GetPresentExtensions                            */
 TEST_GROUP(TestCoreId_GetPresentExtensions)
 {
-  TEST_CoreId_GetPresentExtensions_AccessCount
+  TEST_CoreId_GetPresentExtensions_AccessCount,
+  TEST_CoreId_GetPresentExtensions_AccessValue
 };
 
 
