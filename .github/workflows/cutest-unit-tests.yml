@@ -1,0 +1,21 @@
+name: Automated CuTest Unit-Test
+run-name: Run automated Unit-Test using CuTest
+
+on: [push]
+jobs:
+  cutest-unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run Unit-Test
+        uses: docker://islandc/cutest
+        with:
+          args: /bin/sh -c "cd TEST_RV32CoreIdent && make all && ./TEST_RV32CoreIdent"
+
+      - name: Archive Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: unit-test-report
+          path: TEST_RV32CoreIdent/report.html
