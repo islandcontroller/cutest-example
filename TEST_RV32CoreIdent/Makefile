@@ -26,12 +26,10 @@ LIBS := cutest
 $(PROJ_NAME): $(OBJS)
 	gcc $^ $(LDFLAGS) $(addprefix -l,$(LIBS)) -o $@
 
-# Default build targets
-.PHONY: clean all
-
 # 'all' build target
 all: $(PROJ_NAME)
+	./$<
 
 # 'clean' build target
 clean:
-	@rm -rf $(PROJ_NAME) $(OBJS)
+	@rm -rf $(PROJ_NAME) $(OBJS) report.html
