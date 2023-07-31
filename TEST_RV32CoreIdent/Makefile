@@ -20,7 +20,7 @@ LIBS := cutest
 
 # Compile object files
 %.o: %.c
-	gcc $(CCFLAGS) $(addprefix -I,$(INCLUDE)) -c $< -o $@
+	gcc $(CCFLAGS) $(CCDEFS) $(addprefix -I,$(INCLUDE)) -c $< -o $@
 
 # Link into executable
 $(PROJ_NAME): $(OBJS)
