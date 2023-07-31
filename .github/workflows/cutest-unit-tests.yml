@@ -12,7 +12,7 @@ jobs:
       - name: Run Unit-Test
         uses: docker://islandc/cutest
         with:
-          args: /bin/sh -c "cd TEST_RV32CoreIdent && make all"
+          args: /bin/sh -c "make all -C TEST_RV32CoreIdent"
 
       - name: Archive Reports
         uses: actions/upload-artifact@v3
